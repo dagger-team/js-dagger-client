@@ -1,0 +1,159 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "impliedStrict": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "settings": {},
+    "globals": {
+        "config": "readonly",
+        "_": "readonly",
+        "it": "readonly",
+        "describe": "readonly",
+        "before": "readonly",
+        "beforeEach": "readonly",
+        "after": "readonly",
+        "afterEach": "readonly",
+        "test_util": "readonly",
+        "trust": "readonly",
+        "trusts": "readonly"
+    },
+    "rules": {
+        "indent": [
+            2,
+            4,
+            {
+                "SwitchCase": 1,
+                "flatTernaryExpressions": true
+            }
+        ],
+        "quotes": [
+            2,
+            "single"
+        ],
+        "key-spacing": [
+            2,
+            {
+                "beforeColon": false,
+                "afterColon": true
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "overrides": {
+                    "if": {
+                        "after": false
+                    },
+                    "for": {
+                        "after": false
+                    },
+                    "while": {
+                        "after": false
+                    },
+                    "switch": {
+                        "after": false
+                    }
+                }
+            }
+        ],
+        "object-curly-spacing": [
+            2,
+            "always"
+        ],
+        "array-bracket-spacing": [
+            2,
+            "never"
+        ],
+        "computed-property-spacing": [
+            2,
+            "never"
+        ],
+        "space-in-parens": [
+            2,
+            "never"
+        ],
+        "no-process-exit": [
+            0
+        ],
+        "comma-dangle": [
+            2,
+            "never"
+        ],
+        "camelcase": [
+            0
+        ],
+        "strict": [
+            2,
+            "never"
+        ],
+        "consistent-this": [
+            2,
+            "_this"
+        ],
+        "no-underscore-dangle": [
+            0
+        ],
+        "no-mixed-requires": [
+            2,
+            true
+        ],
+        "no-class-assign": 0,
+        "curly": [
+            2,
+            "multi-line",
+            "consistent"
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                "args": "none",
+                "varsIgnorePattern": "React"
+            }
+        ],
+        "new-cap": [
+            "error",
+            {
+                "capIsNewExceptionPattern": "^.*Reducer"
+            }
+        ],
+        "no-console": [
+            "warn"
+        ],
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 2,
+                "maxEOF": 1
+            }
+        ],
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        "jsx-quotes": 2,
+        "no-prototype-builtins": 0,
+        "semi": [
+            "error",
+            "always"
+        ],
+        "@typescript-eslint/triple-slash-reference": 0,
+        "@typescript-eslint/camelcase": 0
+    }
+}
