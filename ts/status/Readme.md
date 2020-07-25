@@ -10,16 +10,21 @@ customization based on use-case.
 
 ### Simple, automatic integration:
 
+By just importing the dagger client, and calling init with your API key, dagger
+will attempt to automatically detect the environment and log task run status to 
+dagger.
+
 ```js
-// By just importing the dagger client, and calling init with your API key, dagger
-// will attempt to automatically detect the environment and log task run status to 
-// dagger.
 
 const Dagger = require('js-dagger-client');
 Dagger.init('apikey');
 ```
 
 ### Function wrapper:
+
+A function wrapper is provided that will log any call to that function as a new
+task run. Task run id will be automatically generated, or you can provide a
+task run id generator via the `getTaskRunId` parameter.
 
 ```js
 const Dagger = require('js-dagger-client');
@@ -29,23 +34,25 @@ const yourTaskFunction = () => {
     console.log('Doing something....')
 };
 
-daggerClient.wrap(yourTaskFunction);
+daggerClient.wrap(yourTaskFunction, { taskName: 'some task name' });
 ```
 
 ### Fully custom:
+
+Using the daggerClient you can create and update your own task run.
 
 ```js
 const Dagger, { TaskRunStatusTypes } = require('js-dagger-client');
 const daggerClient = new Dagger('apikey');
 
 const yourTaskFunction = () => {
-    const task = daggerClient.createTaskRun('a unqiue task run id', TaskRunStatusTypes.running, { input: 'Some input' });
+    const task_run = daggerClient.createTaskRun('some task name', 'a unqiue task run id', TaskRunStatusTypes.running, { input: 'Some input' });
 
     try:
         console.log('Doing something');
-        daggerClient.updateTask(task, TaskRunStatusTypes.succeeded, { output: 'Some output' });
+        daggerClient.updateTaskRun(task_run, TaskRunStatusTypes.succeeded, { output: 'Some output' });
     catch(err):
-        daggerClient.updateTask(task, TaskRunStatusTypes.failed, { error: err });
+        daggerClient.updateTaskRun(task_run, TaskRunStatusTypes.failed, { error: err });
 };
 
 yourTaskFunction();
