@@ -28,7 +28,7 @@ task run id generator via the `getTaskRunId` parameter.
 
 ```js
 const Dagger = require('js-dagger-client');
-const daggerClient = new Dagger('apikey');
+const daggerClient = new Dagger('apikey').statusClient;
 
 const yourTaskFunction = () => {
     console.log('Doing something....')
