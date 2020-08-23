@@ -10,7 +10,8 @@
   "private": false,
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
