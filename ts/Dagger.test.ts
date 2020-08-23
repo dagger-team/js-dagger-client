@@ -38,7 +38,9 @@ describe('Dagger', () => {
                     fakeTaskRun,
                     {
                         status: 'succeeded',
-                        output: 'Hello world'
+                        output: {
+                            output: 'Hello world'
+                        }
                     }
                 );
         });
@@ -76,7 +78,11 @@ describe('Dagger', () => {
                     {
                         status: 'failed',
                         output: {
-                            'error': testError
+                            'error': {
+                                message: 'Whoopsie',
+                                name: 'Error',
+                                stack: expect.any(String)
+                            }
                         }
                     }
                 );

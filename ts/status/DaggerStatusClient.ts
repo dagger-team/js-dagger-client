@@ -29,17 +29,12 @@ export default class DaggerStatusClient {
     private async sendTaskStatus(taskRun: TaskRun): Promise<TaskRun> {
         const {
             // Omit things that can't be sent to API
-            _version, customer_id, created_at, latest_status_datetime, updated_at, // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars, camelcase
+            customer_id, created_at, latest_status_datetime, updated_at, // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars, camelcase
             ...requestBody
         } = {
             ...taskRun,
             api_token: this.apiKey // eslint-disable-line camelcase
         };
-
-        console.log(
-            this.options.daggerServerUrl + '/v1/tasks/status', 
-            requestBody
-        );
 
         const axiosResponse = await axios
             .post<_TaskStatusApiParams, AxiosResponse<TaskRun>>(

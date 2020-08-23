@@ -4,7 +4,7 @@ import { TaskRun, TaskRunStatusType } from '@dagger-team/js-dagger-shared';
 import DaggerStatusClient from './DaggerStatusClient';
 import { wrap } from 'module';
 
-const _defaultApiUrl = 'https://api.getdagger.com/v1/task';
+const _defaultApiUrl = 'https://api.getdagger.com/v1/tasks/status';
 
 jest.mock('axios');
 const mockedAxios = (axios as jest.Mocked<typeof axios>);
@@ -27,7 +27,7 @@ describe('Test DaggerStatusClient', () => {
                 {
                     ...testRun, 
                     ...{
-                        apiKey: testApiKey
+                        api_token: testApiKey // eslint-disable-line camelcase
                     } 
                 }
             );
@@ -46,11 +46,11 @@ describe('Test DaggerStatusClient', () => {
 
         expect(mockedAxios.post)
             .toHaveBeenCalledWith(
-                'http://localhost/v1/task', 
+                'http://localhost/v1/tasks/status', 
                 {
                     ...testRun, 
                     ...{
-                        apiKey: testApiKey
+                        api_token: testApiKey // eslint-disable-line camelcase
                     } 
                 }
             );
@@ -81,11 +81,11 @@ describe('Test DaggerStatusClient', () => {
 
                 expect(mockedAxios.post)
                     .toHaveBeenCalledWith(
-                        _defaultApiUrl, 
+                        _defaultApiUrl,
                         {
                             ...testRun, 
                             ...{
-                                apiKey: testApiKey,
+                                api_token: testApiKey, // eslint-disable-line camelcase
                                 [field]: updateFields[field]
                             } 
                         }

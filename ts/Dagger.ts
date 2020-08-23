@@ -35,8 +35,6 @@ export default class Dagger {
                 integration = getIntegration(options?.integrationName);
             }
 
-            console.log(integration);
-
             let taskRun = await integration.getTaskRun(
                 options?.integrationParams || {},
                 {
