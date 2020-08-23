@@ -62,11 +62,11 @@ export default class LambdaIntegration extends Integration {
                     }
                 );
 
-                await wrappedHandler(event, context, callback);
+                return await wrappedHandler(event, context, callback);
             };
             this.handler = newHandler;
 
-            previousHandleOnce.apply(this, ...args);
+            return previousHandleOnce.apply(this, ...args);
         };
 
         Runtime.prototype.handleOnce = newHandleOnce;
