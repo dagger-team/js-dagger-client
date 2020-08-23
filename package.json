@@ -1,6 +1,6 @@
 {
   "name": "@dagger-team/js-dagger-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Client library for dagger. Includes worker and Task logging scripts",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
