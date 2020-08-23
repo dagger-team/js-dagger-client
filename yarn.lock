@@ -891,8 +891,8 @@
 
 "@dagger-team/js-dagger-shared@^0.1.0":
   version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@dagger-team/js-dagger-shared/0.1.0/3df6709e11b28e6447628df3d5a8326c2ef1ba73a0f1dfe3425bdb0f468efc06#b5644538c93a90a36a0a65b89d605720f9320bb1"
-  integrity sha512-NwtV2mNBISbflRL7P7y1XMw1MrwZGdco+oV26PGTOA8Uh5rNj90qE6Y3Di3ppO8xRlxwJ/X5jJZoWzPjDjE4Qg==
+  resolved "https://registry.yarnpkg.com/@dagger-team/js-dagger-shared/-/js-dagger-shared-0.1.0.tgz#5b6afbd8cc11f49ef6544793089eae7ab67f36b5"
+  integrity sha512-PTJ8XsKYapgL7oC6brdFxcISCYdrgkGA3ongq9tZjy6NkrZyJPCM7e8oQw2QvBXBT4yGhsy6veC8APFhoLZRWQ==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
