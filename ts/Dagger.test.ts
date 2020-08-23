@@ -15,7 +15,7 @@ describe('Dagger', () => {
         const dagger = new Dagger(apiKey);
 
         expect(dagger).toBeDefined();
-        expect(mockedDaggerStatusClient).toHaveBeenCalledWith(apiKey);
+        expect(mockedDaggerStatusClient).toHaveBeenCalledWith(apiKey, undefined);
     });
 
     describe('wrap function', () => {

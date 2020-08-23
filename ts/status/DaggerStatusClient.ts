@@ -1,10 +1,8 @@
 import { default as axios, AxiosResponse } from 'axios';
 
-import { TaskRun, TaskRunStaticParameters } from '@dagger-team/js-dagger-shared';
+import { TaskRun } from '@dagger-team/js-dagger-shared';
 
-type TaskRunServerParameters = 'updated_at' | 'created_at'
-
-type ClientTaskRunParams = Omit<TaskRun, TaskRunStaticParameters | TaskRunServerParameters>
+import { ClientTaskRunParams } from '../types';
 
 export interface DaggerStatusClientOptions {
     daggerServerUrl: string;
@@ -13,12 +11,6 @@ export interface DaggerStatusClientOptions {
 const DEFAULT_DAGGER_STATUS_OPTIONS = {
     daggerServerUrl: 'https://api.getdagger.com'
 } as DaggerStatusClientOptions;
-
-interface CreateTaskRunParameters extends Omit<ClientTaskRunParams, 'language' | 'system'> {
-    integration?: string;
-}
-
-type UpdateTaskRunParameters = Partial<Omit<ClientTaskRunParams, 'task_name' | 'id'>>
 
 interface _TaskStatusApiParams extends ClientTaskRunParams {
     api_token: string;
@@ -37,12 +29,17 @@ export default class DaggerStatusClient {
     private async sendTaskStatus(taskRun: TaskRun): Promise<TaskRun> {
         const {
             // Omit things that can't be sent to API
-            _version, customer_id, created_at, latest_status_datetime, updated_at,
+            _version, customer_id, created_at, latest_status_datetime, updated_at, // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars, camelcase
             ...requestBody
         } = {
             ...taskRun,
-            api_token: this.apiKey
+            api_token: this.apiKey // eslint-disable-line camelcase
         };
+
+        console.log(
+            this.options.daggerServerUrl + '/v1/tasks/status', 
+            requestBody
+        );
 
         const axiosResponse = await axios
             .post<_TaskStatusApiParams, AxiosResponse<TaskRun>>(
@@ -58,14 +55,13 @@ export default class DaggerStatusClient {
         return axiosResponse.data;
     }
 
-    async createTaskRun(updates: CreateTaskRunParameters): Promise<TaskRun> {
+    async createTaskRun(updates: ClientTaskRunParams): Promise<TaskRun> {
         let taskRun = new TaskRun(updates.task_name, updates.id);
         taskRun = { ...taskRun, ...updates };
-
         return await this.sendTaskStatus(taskRun);
     }
 
-    async updateTaskRun(taskRun: TaskRun, updates: UpdateTaskRunParameters): Promise<TaskRun> {
+    async updateTaskRun(taskRun: TaskRun, updates: Omit<ClientTaskRunParams, 'task_name' | 'id'>): Promise<TaskRun> {
         taskRun = { ...taskRun, ...updates };
         return await this.sendTaskStatus(taskRun);
     }

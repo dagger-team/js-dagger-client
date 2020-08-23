@@ -18,6 +18,12 @@ dagger.
 
 const Dagger = require('js-dagger-client');
 Dagger.init('apikey');
+
+// or:
+Dagger.init('apikey', {integrationName: 'aws_lambda'});
+
+// or:
+Dagger.init('apikey', {integration: MyCustomIntegration()}})
 ```
 
 ### Function wrapper:
@@ -34,7 +40,18 @@ const yourTaskFunction = () => {
     console.log('Doing something....')
 };
 
-daggerClient.wrap(yourTaskFunction, { taskName: 'some task name' });
+daggerClient.wrap(
+    yourTaskFunction, 
+    { 
+        taskName: 'some task name'
+    },
+    {
+        // or...
+        integration_name: 'aws_ecs'
+        // or...
+        integration: MyCustomIntegration()
+    }
+);
 ```
 
 ### Fully custom:

@@ -1,5 +1,13 @@
 import { default as DaggerStatusClient, DaggerStatusClientOptions } from './status/DaggerStatusClient';
-import { TaskRun } from '@dagger-team/js-dagger-shared';
+import { ClientTaskRunParams } from './types';
+import Integration, { IntegrationParams } from './integrations/Integration';
+import { getIntegration } from './integrations/auto';
+
+interface WrapParams {
+    integrationName?: 'string',
+    integration?: Integration,
+    integrationParams?: IntegrationParams
+}
 
 export default class Dagger {
     private readonly apiKey: string;
@@ -10,18 +18,37 @@ export default class Dagger {
         this.statusClient = new DaggerStatusClient(this.apiKey, statusClientOptions);
     }
 
+    /**
+     * Wraps a function, treating it as a Dagger task. started, succeeded and
+     * failed statuses will be logged to dagger.
+     * 
+     * @param func The function to wrap
+     */
     wrap<WrapFuncInput extends any[], WrapFuncOutput>(
-        func: (...input: WrapFuncInput) => Promise<WrapFuncOutput>
+        func: (...input: WrapFuncInput) => Promise<WrapFuncOutput>,
+        clientTaskRunParams?: ClientTaskRunParams,
+        options?: WrapParams
     ): (...input: WrapFuncInput) => Promise<WrapFuncOutput> { // eslint-disable-line @typescript-eslint/no-explicit-any
         return async (...input: WrapFuncInput): Promise<WrapFuncOutput> => {
-            const taskRun = await this.statusClient.createTaskRun({
-                task_name: 'asdf',
-                id: 'asdf',
-                status: 'started',
-                input: {
-                    'args': input
+            let integration = options?.integration;
+            if(!integration) {
+                integration = getIntegration(options?.integrationName);
+            }
+
+            console.log(integration);
+
+            let taskRun = await integration.getTaskRun(
+                options?.integrationParams || {},
+                {
+                    ...clientTaskRunParams,
+                    status: 'started',
+                    input: {
+                        'args': input
+                    }
                 }
-            });
+            ); 
+
+            taskRun = await this.statusClient.createTaskRun(taskRun);
 
             try {
                 const output = await func(...input);
@@ -51,8 +78,13 @@ export default class Dagger {
         };
     }
 
-    static auto(apiKey): Dagger {
-        const dagger = new Dagger(apiKey);
+    static auto(apiKey: string, statusClientOptions?: Partial<DaggerStatusClientOptions>): Dagger {
+        const dagger = new Dagger(apiKey, statusClientOptions);
+
+        console.log('autoload');
+        const integration = getIntegration('auto');
+        integration.autoloadIntegration(dagger);
+
         return dagger;
     }
 }

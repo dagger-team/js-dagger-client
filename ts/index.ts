@@ -1,6 +1,5 @@
-export { default as DaggerStatusClient } from './status/DaggerStatusClient';
-export { TaskRun } from '@dagger-team/js-dagger-shared';
+import Dagger from './Dagger';
+// export { default as DaggerStatusClient } from './status/DaggerStatusClient';
+// export { TaskRun } from '@dagger-team/js-dagger-shared';
 
-export const helloWorld = () => {
-    console.log('Hello World'); // eslint-disable-line no-console
-};
+export = Dagger;
