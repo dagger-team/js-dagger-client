@@ -889,10 +889,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@dagger-team/js-dagger-shared@^0.0.1":
-  version "0.0.1"
-  resolved "https://npm.pkg.github.com/download/@dagger-team/js-dagger-shared/0.0.1/64a45f33701b4d727625cee06bca1d24a15e6db9e0dd2469257bcaaf953576c9#698ffe44d564a462e8d7ce880508dffcf2434d0f"
-  integrity sha512-fqiEHVlWYTcFKGtRriDc0CFzJ9N/nd8YEoCbgyPf/JtdWlZtHfZtcPuXI2dEUS+6LmliKIUroGNkkar8LVKndg==
+"@dagger-team/js-dagger-shared@^0.1.0":
+  version "0.1.0"
+  resolved "https://npm.pkg.github.com/download/@dagger-team/js-dagger-shared/0.1.0/3df6709e11b28e6447628df3d5a8326c2ef1ba73a0f1dfe3425bdb0f468efc06#b5644538c93a90a36a0a65b89d605720f9320bb1"
+  integrity sha512-NwtV2mNBISbflRL7P7y1XMw1MrwZGdco+oV26PGTOA8Uh5rNj90qE6Y3Di3ppO8xRlxwJ/X5jJZoWzPjDjE4Qg==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
