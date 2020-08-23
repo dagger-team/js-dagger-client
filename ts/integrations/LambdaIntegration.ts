@@ -7,10 +7,10 @@ interface LambdaIntegrationParams extends IntegrationParams {
     // https://docs.aws.amazon.com/lambda/latest/dg/nodejs-context.html
     lambdaContext: {
         /* eslint-disable camelcase */
-        function_name: string,
-        aws_request_id: string,
-        log_group_name: string,
-        log_stream_name: string
+        functionName: string,
+        awsRequestId: string,
+        logGroupName: string,
+        logStreamName: string
         /* eslint-enable */
     };
 }
@@ -83,10 +83,10 @@ export default class LambdaIntegration extends Integration {
         let taskId = taskRunParams.id;
 
         if(!taskName) {
-            taskName = integrationParams.lambdaContext.function_name;
+            taskName = integrationParams.lambdaContext.functionName;
         }
         if(!taskId) {
-            taskId = integrationParams.lambdaContext.aws_request_id;
+            taskId = integrationParams.lambdaContext.awsRequestId;
         }
 
         let taskRun = new TaskRun(
@@ -103,8 +103,8 @@ export default class LambdaIntegration extends Integration {
                 type: 'aws_cloudwatch',
                 data: {
                     /* eslint-disable camelcase */
-                    log_group_name: integrationParams.lambdaContext.log_group_name,
-                    log_stream_name: integrationParams.lambdaContext.log_stream_name,
+                    log_group_name: integrationParams.lambdaContext.logGroupName,
+                    log_stream_name: integrationParams.lambdaContext.logStreamName,
                     time_filter: true
                     /* eslint-enable */
                 }
