@@ -35,7 +35,6 @@ export default class LambdaIntegration extends Integration {
     }
 
     wrapLambdaRuntime(dagger: Dagger, taskRunParams?: ClientTaskRunParams): void {
-        console.log('wrapLambdaRuntime');
         const _this = this;
 
         const Runtime = require.cache['/var/runtime/Runtime.js'].exports as AWSLambdaRuntime;

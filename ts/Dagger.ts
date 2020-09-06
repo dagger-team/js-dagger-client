@@ -2,6 +2,7 @@ import { default as DaggerStatusClient, DaggerStatusClientOptions } from './stat
 import { ClientTaskRunParams } from './types';
 import Integration, { IntegrationParams } from './integrations/Integration';
 import { getIntegration } from './integrations/auto';
+import * as AWS from 'aws-sdk';
 
 interface WrapParams {
     integrationName?: 'string',
@@ -10,10 +11,10 @@ interface WrapParams {
 }
 
 export default class Dagger {
-    private readonly apiKey: string;
+    private readonly apiKey: Promise<string>;
     readonly statusClient: DaggerStatusClient;
 
-    constructor(apiKey: string, statusClientOptions?: Partial<DaggerStatusClientOptions>) {
+    constructor(apiKey: Promise<string>, statusClientOptions?: Partial<DaggerStatusClientOptions>) {
         this.apiKey = apiKey;
         this.statusClient = new DaggerStatusClient(this.apiKey, statusClientOptions);
     }
@@ -76,10 +77,36 @@ export default class Dagger {
         };
     }
 
-    static auto(apiKey: string, statusClientOptions?: Partial<DaggerStatusClientOptions>): Dagger {
-        const dagger = new Dagger(apiKey, statusClientOptions);
+    static async autoloadCredentialsAWSSecretsManager(): Promise<string> {
+        const secretsManager = new AWS.SecretsManager();
 
-        console.log('autoload');
+        const secretsManagerResponse = await secretsManager.getSecretValue({
+            SecretId: 'dagger'
+        }).promise();
+
+        const secret = JSON.parse(secretsManagerResponse.SecretString)['apiKey'];
+
+        return secret;
+    }
+
+    static async autoloadCredentials(apiKey?: string): Promise<string> {
+        if(apiKey !== null) {
+            return apiKey;
+        }
+
+        if(process.env['AWS_REGION']) {
+            // Attempt to load from secrets manager
+            return Dagger.autoloadCredentialsAWSSecretsManager();
+        }
+
+        throw new Error('No token provided, an no usable autoload could be found');
+    }
+
+    static auto(apiKey?: string, statusClientOptions?: Partial<DaggerStatusClientOptions>): Dagger {
+        const credentialPromise = Dagger.autoloadCredentials(apiKey);
+
+        const dagger = new Dagger(credentialPromise, statusClientOptions);
+
         const integration = getIntegration('auto');
         integration.autoloadIntegration(dagger);
 

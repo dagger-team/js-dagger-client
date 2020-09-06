@@ -1,5 +1,5 @@
 process.env['_HANDLER'] = 'Something';
-process.env['AWS_REGION'] = 'us-mikes-house-1';
+process.env['AWS_REGION'] = 'us-east-2';
 
 const FakeLambdaRuntime = require('./FakeLambdaRuntime');
 

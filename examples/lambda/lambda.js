@@ -1,5 +1,5 @@
 const Dagger = require('../../dist');
-Dagger.auto('Vrd1g7PxaYxDoYf6RQQlAC1sJk0ckE', {
+Dagger.auto(null, {
     daggerServerUrl: 'http://localhost:3001'
 });
 

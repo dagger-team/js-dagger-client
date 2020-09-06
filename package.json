@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@dagger-team/js-dagger-shared": "^0.1.0",
+    "aws-sdk": "^2.747.0",
     "axios": "^0.19.2"
   }
 }

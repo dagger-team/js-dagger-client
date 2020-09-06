@@ -17,23 +17,25 @@ interface _TaskStatusApiParams extends ClientTaskRunParams {
 }
 
 export default class DaggerStatusClient {
-    private readonly apiKey: string;
+    private readonly apiKey: Promise<string>;
 
     private readonly options: DaggerStatusClientOptions;
 
-    constructor(apiKey: string, options?: Partial<DaggerStatusClientOptions>) {
+    constructor(apiKey: Promise<string>, options?: Partial<DaggerStatusClientOptions>) {
         this.apiKey = apiKey;
         this.options = { ...DEFAULT_DAGGER_STATUS_OPTIONS, ...options };
     }
 
     private async sendTaskStatus(taskRun: TaskRun): Promise<TaskRun> {
+        const apiKey = await this.apiKey;
+
         const {
             // Omit things that can't be sent to API
             customer_id, created_at, latest_status_datetime, updated_at, // eslint-disable-line @typescript-eslint/no-unused-vars, no-unused-vars, camelcase
             ...requestBody
         } = {
             ...taskRun,
-            api_token: this.apiKey // eslint-disable-line camelcase
+            api_token: apiKey // eslint-disable-line camelcase
         };
 
         const axiosResponse = await axios
