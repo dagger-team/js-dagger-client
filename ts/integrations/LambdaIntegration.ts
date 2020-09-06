@@ -43,7 +43,7 @@ export default class LambdaIntegration extends Integration {
 
         const newHandleOnce = function(...args) {
             if(this.__daggerInitialized) {
-                previousHandleOnce.apply(this, ...args);
+                return previousHandleOnce.apply(this, ...args);
             }
             this.__daggerInitialized = true;
 
