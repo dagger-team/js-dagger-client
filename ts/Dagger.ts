@@ -90,7 +90,7 @@ export default class Dagger {
     }
 
     static async autoloadCredentials(apiKey?: string): Promise<string> {
-        if(apiKey !== null) {
+        if(apiKey) {
             return apiKey;
         }
 
